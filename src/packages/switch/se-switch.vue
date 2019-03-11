@@ -1,6 +1,6 @@
 <template>
   <div class="winner-wrap">
-    <input type="text">
+    switch
   </div>
 </template>
 

@@ -1,12 +1,15 @@
 <template>
   <div id="app">
-    <seSwitch></seSwitch>
+    <se-switch></se-switch>
+    <se-button></se-button>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'app',
+    name: 'app',
   data () {
     return {
     }
