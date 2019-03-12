@@ -1,0 +1,14 @@
+@charset "UTF-8";
+/* Font */
+:root {
+  --font-size-base: 14px;
+  --font-color-base: rgba(255,255,255,.8);
+  --font-disabled: #B2B2B2;
+  --font-family: '幼圆'; }
+
+:root {
+  --color-default: #07A3AE;
+  --color-success: #1FA250;
+  --color-warning: #FEA63C;
+  --color-danger: #DB3A2B;
+  --color-info: #0A71B8; }

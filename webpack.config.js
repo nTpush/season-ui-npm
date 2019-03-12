@@ -4,7 +4,7 @@ var webpack = require('webpack')
 
 const md = require('markdown-it')(); // 引入markdown-it
 const slugify = require('transliteration').slugify; // 引入transliteration中的slugify方法
-
+const hljs = require('highlight.js')
 const striptags = require('./strip-tags'); // 引入刚刚的工具类
 /**
  * 由于cheerio在转换汉字时会出现转为Unicode的情况,所以我们编写convert方法来保证最终转码正确
@@ -64,15 +64,14 @@ module.exports = {
                         permalinkBefore: true // 在标题前创建锚点
                     }],
                     // 'markdown-it-container'的作用是自定义代码块
-
-                    [require('markdown-it-container'), 'se', {
-                        // 当我们写::: demo :::这样的语法时才会进入自定义渲染方法
+                    [require('markdown-it-container'), 'demo', {
+                        // 当我们写::: se :::这样的语法时才会进入自定义渲染方法
                         validate: function(params) {
-                            return params.trim().match(/^se\s*(.*)$/);
+                            return params.trim().match(/^demo\s*(.*)$/);
                         },
                         // 自定义渲染方法,这里为核心代码
                         render: function(tokens, idx) {
-                            var m = tokens[idx].info.trim().match(/^se\s*(.*)$/);
+                            var m = tokens[idx].info.trim().match(/^demo\s*(.*)$/);
                             // nesting === 1表示标签开始
                             if (tokens[idx].nesting === 1) {
                                 // 获取正则捕获组中的描述内容,即::: demo xxx中的xxx
@@ -94,17 +93,43 @@ module.exports = {
                                 // 将jsfiddle对象转换为字符串,并将特殊字符转为转义序列
                                 jsfiddle = md.utils.escapeHtml(JSON.stringify(jsfiddle));
                                 // 起始标签,写入demo-block模板开头,并传入参数
-                                return `<se-button class="demo-box" :jsfiddle="${jsfiddle}">
+                                return `<demo-block class="demo-box" :jsfiddle="${jsfiddle}">
                             <div class="source" slot="source">${html}</div>
                             ${descriptionHTML}
                             <div class="highlight" slot="highlight">`;
                             }
                             // 否则闭合标签
-                            return '</div></se-button>\n';
+                            return '</div></demo-block>\n';
                         }
                     }],
-                    [require('markdown-it-container'), 'tip'],
-                    [require('markdown-it-container'), 'warning']
+                    [require('markdown-it-container'), 'tip' , {
+                        validate: function(params) {
+                            return params.trim().match(/^tip\s*(.*)$/);
+                        },
+                        render: function(tokens, idx) {
+                            var m = tokens[idx].info.trim().match(/^tip\s*(.*)$/);
+                            if (tokens[idx].nesting === 1) {
+                                var description = (m && m.length > 1) ? m[1] : '';
+                                return `<tip-block class="tip-block" >
+                                <div class="tip" slot="tip">${description}</div>`;
+                            }
+                            return '</div></tip-block>\n';
+                        }
+                    }],
+                    [require('markdown-it-container'), 'warning', {
+                        validate: function(params) {
+                            return params.trim().match(/^warning\s*(.*)$/);
+                        },
+                        render: function(tokens, idx) {
+                            var m = tokens[idx].info.trim().match(/^warning\s*(.*)$/);
+                            if (tokens[idx].nesting === 1) {
+                                var description = (m && m.length > 1) ? m[1] : '';
+                                return `<warning-block class="warning-block" >
+                                <div class="warning" slot="warning">${description}</div>`;
+                            }
+                            return '</div></warning-block>\n';
+                        }
+                    }]
                 ],
                 // 定义处理规则
                 preprocess: function(MarkdownIt, source) {
@@ -115,10 +140,16 @@ module.exports = {
                     // 对于代码块去除v-pre,添加高亮样式
                     MarkdownIt.renderer.rules.fence = wrap(MarkdownIt.renderer.rules.fence);
                     return source;
+                },
+                highlight: function (code, lang) {
+                    if (lang && hljs.getLanguage(lang)) {
+                        return hljs.highlight(lang, code, true).value;
+                    } else {
+                        return hljs.highlightAuto(code).value;
+                    }
                 }
             }
         },
-
       {
         test: /\.scss$/,
         use: [
