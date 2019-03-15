@@ -65,7 +65,7 @@ module.exports = {
                     }],
                     // 'markdown-it-container'的作用是自定义代码块
                     [require('markdown-it-container'), 'demo', {
-                        // 当我们写::: se :::这样的语法时才会进入自定义渲染方法
+                        // 当我们写::: demo :::这样的语法时才会进入自定义渲染方法
                         validate: function(params) {
                             return params.trim().match(/^demo\s*(.*)$/);
                         },
@@ -131,16 +131,6 @@ module.exports = {
                         }
                     }]
                 ],
-                // 定义处理规则
-                preprocess: function(MarkdownIt, source) {
-                    // 对于markdown中的table,
-                    MarkdownIt.renderer.rules.table_open = function() {
-                        return '<table class="table">';
-                    };
-                    // 对于代码块去除v-pre,添加高亮样式
-                    MarkdownIt.renderer.rules.fence = wrap(MarkdownIt.renderer.rules.fence);
-                    return source;
-                },
                 highlight: function (code, lang) {
                     if (lang && hljs.getLanguage(lang)) {
                         return hljs.highlight(lang, code, true).value;

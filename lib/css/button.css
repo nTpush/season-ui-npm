@@ -2,7 +2,7 @@
   border: none;
   outline: none;
   font-size: var(--font-size-base);
-  padding: 8px 12px;
+  padding: 10px 14px;
   letter-spacing: 1px;
   border-radius: 2px;
   background: var(--color-default);
@@ -37,6 +37,8 @@
       border: 1px solid var(--font-disabled); }
   .season__button.is-round {
     border-radius: 100px; }
+  .season__button-big {
+    width: 100%; }
 
 .season__button-info {
   background: var(--color-info); }

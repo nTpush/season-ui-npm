@@ -1,0 +1,24 @@
+.se__row {
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  &.is-justify-center {
+    justify-content: flex-end;
+  }
+  &.is-justify-end {
+    justify-content: flex-end;
+  }
+  &.is-justify-space-between {
+    justify-content: space-between;
+  }
+  &.is-justify-space-around {
+    justify-content: space-around;
+  }
+  &.is-align-middle {
+    align-items: center;
+  }
+  &.is-align-bottom {
+    align-items: flex-end;
+  }
+}

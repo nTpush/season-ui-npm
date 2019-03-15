@@ -15,7 +15,10 @@
             <router-link to="/test">test 组件</router-link>
           </li>
           <li>
-            <router-link to="/button">button 组件</router-link>
+            <router-link to="/button">Button 组件</router-link>
+          </li>
+          <li>
+            <router-link to="/layout">Layout 组件</router-link>
           </li>
         </ul>
       </div>

@@ -13,7 +13,6 @@
         <slot></slot>
     </button>
 </template>
-<!--class="w__button"-->
 <script>
 
 export default {

@@ -1,9 +1,13 @@
-import SeSwitch from './packages/switch/se-switch.vue'
-import SeButton from './packages/button/se-button.vue'
+import SeSwitch from './packages/switch/index'
+import SeButton from './packages/button/index'
+import SeRow from './packages/row/index'
+import SeCol from './packages/col/index'
 // ...
 const components = [
   SeSwitch,
-  SeButton
+  SeButton,
+  SeRow,
+  SeCol
   // ...
 ]
 
@@ -20,6 +24,8 @@ if (typeof window !== 'undefined' && window.Vue) {
 export default {
   install,
   SeSwitch,
-  SeButton
+  SeButton,
+  SeRow,
+  SeCol
   // ...
 }

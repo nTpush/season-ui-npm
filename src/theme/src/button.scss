@@ -2,7 +2,7 @@
   border: none;
   outline: none;
   font-size: var(--font-size-base);
-  padding: 8px 12px;
+  padding: 10px 14px;
   letter-spacing: 1px;
   border-radius: 2px;
   background: var(--color-default);
@@ -43,6 +43,9 @@
   }
   &.is-round {
     border-radius: 100px;
+  }
+  &-big {
+    width: 100%;
   }
 }
 
